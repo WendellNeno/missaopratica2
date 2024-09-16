@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ordenação com JS</title>
+    <script src="ordenando.js"></script>
+</head>
+<body>
+    <h1>Exemplo de Ordenação</h1>
+
+    <!-- Campo de entrada para adicionar valores -->
+    <input type="number" id="valor" placeholder="Digite um valor">
+    <button onclick="add()">Adicionar</button>
+
+    <!-- Seletor de algoritmo -->
+    <select id="algoritmo">
+        <option value="bubble_sort">Bubble Sort</option>
+        <option value="selection_sort">Selection Sort</option>
+        <option value="quick_sort">Quick Sort</option>
+    </select>
+    <button onclick="ordenar()">Ordenar</button>
+    <button onclick="misturar()">Misturar</button>
+
+    <!-- Lista onde os valores serão exibidos -->
+    <ul id="valores"></ul>
+
+    <script>
+        let valores = [];
+
+        // Função para adicionar valores na lista
+        function add() {
+            const valorInput = document.getElementById("valor");
+            const valor = valorInput.value.trim(); // Remover espaços extras
+
+            if (valor === "" || isNaN(valor)) {
+                alert("Por favor, insira um valor numérico.");
+                return;
+            }
+
+            const lista = document.getElementById("valores");
+            const node = document.createElement("li");
+            node.textContent = valor;
+            lista.appendChild(node);
+            valores.push(parseInt(valor));
+
+            valorInput.value = "";
+        }
+
+        // Função de embaralhar (shuffle) os valores
+        function misturar() {
+            shuffle(valores, valores.length);
+            atualizarLista();
+        }
+
+        // Função de ordenar os valores
+        function ordenar() {
+            const algoritmo = document.getElementById("algoritmo").value;
+
+            switch (algoritmo) {
+                case "bubble_sort":
+                    bubble_sort(valores);
+                    break;
+                case "selection_sort":
+                    selection_sort(valores);
+                    break;
+                case "quick_sort":
+                    quick_sort(valores, 0, valores.length - 1);
+                    break;
+            }
+
+            atualizarLista();
+        }
+
+        // Função para atualizar a lista no DOM
+        function atualizarLista() {
+            const lista = document.getElementById("valores");
+            lista.innerHTML = valores.map(valor => `<li>${valor}</li>`).join("");
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo de Receitas</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <style>
+        .pnlCatalogo {
+            display: flex;
+            flex-wrap: wrap;
+        }
+    </style>
+</head>
+<body class="container bg-warning">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="receitas.html">Catálogo de Receitas</a>
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="usuarios.html">Usuários de Teste</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container-fluid pnlCatalogo">
+        <!-- Conteúdo das receitas será gerado pelo JavaScript -->
+    </div>
+
+  <script>
+        // Vetor de receitas em formato JSON
+        const receitas = [
+            {
+                titulo: "Bolo de Cenoura",
+                imagem: "bolo_cenoura.png",
+                preparo: "Misture os ingredientes e leve ao forno por 40 minutos.",
+                ingredientes: ["3 cenouras", "4 ovos", "2 xícaras de açúcar", "2 xícaras de farinha de trigo", "1 xícara de óleo", "1 colher de fermento"]
+            },
+            {
+                titulo: "Torta de Frango",
+                imagem: "torta_frango.png",
+                preparo: "Asse a massa e recheie com frango desfiado e temperado.",
+                ingredientes: ["500g de frango desfiado", "Massa para torta", "Cebola", "Alho", "Sal", "Pimenta"]
+            }
+
+        ];
+
+        function getListaIngredientes(ingredientes) {
+            let texto = '<ul>';
+            texto += ingredientes.map(ingrediente => `<li>${ingrediente}</li>`).reduce((a, b) => a + b, '');
+            texto += '</ul>';
+            return texto;
+        }
+
+        function getCard(receita) {
+            return `
+                <div class="card" style="width: 18rem; margin: 1rem;">
+                    <img src="${receita.imagem}" class="card-img-top" alt="${receita.titulo}">
+                    <div class="card-body">
+                        <h5 class="card-title">${receita.titulo}</h5>
+                        <div class="card-text">${getListaIngredientes(receita.ingredientes)}
+                            <hr>
+                            ${receita.preparo}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function preencheCatalogo() {
+            const pnlCatalogo = document.querySelector('.pnlCatalogo');
+            pnlCatalogo.innerHTML = receitas.map(getCard).join('');
+        }
+
+        document.addEventListener('DOMContentLoaded', preencheCatalogo);
+    </script>
+</body>
+</html>
+
+
